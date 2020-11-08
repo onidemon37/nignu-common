@@ -1,0 +1,31 @@
+---
+# vars for Debian distribution
+packages_debian:
+  - apt-transport-https
+  - python3-apt
+  - sysstat
+  - rsync
+  - lsof
+  - less
+  - ca-certificates
+  - curl
+  - software-properties-common
+  - wget
+  - openssl
+  - resolvconf
+  - dnsutils
+  - vim
+  - git
+  - sudo
+  - gnupg2
+  - nmap
+  - tcpdump
+  - nfs-common
+  - python3-openssl
+  - zsh
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+  - python3-virtualenv
+  - python3
+  - idle3
+  - update-motd

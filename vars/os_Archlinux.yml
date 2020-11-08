@@ -1,0 +1,7 @@
+---
+# vars for archlinux
+packages_arch:
+  - nvim
+  - openssh-server
+  - nmap
+...

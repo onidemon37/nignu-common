@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  #vagrant:
+platforms:
+  - name: common-node1
+    instance_raw_config_args:
+      - 'vagrant.plugins = ["vagrant-libvirt"]'
+    config_options:
+      ssh.keep_alive: yes
+      ssh.remote_user: "'vagrant'"
+    privileged: true
+    box: debian/buster64
+    provision: no
+providers:
+  - name: libvirt
+    type: libvirt
+    options:
+      memory: 2024
+      cpus: 2
+    driver: kvm
+instances:
+  - name: common
+    ansible_groups:
+      - group1
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

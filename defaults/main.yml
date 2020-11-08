@@ -1,0 +1,27 @@
+---
+# defaults file for common
+country_name: "UK"
+default_locale: en_GB.UTF-8
+debian_repo: http://ftp.us.debian.org/debian
+
+ansible_user: schoolboy
+ansible_user_groups: 
+  - "{{ ansible_user }}"
+ansible_user_shell: /bin/zsh
+ansible_user_comments: "Default system user for nignu machines"
+ansible_user_key_files: files/public_keys/id_rsa.pub
+packages_debian: []
+remove_packages_debian: []
+packages_ubuntu: []
+remove_packages_ubuntu: []
+
+packages_arch: []
+remove_packages_arch: []
+packages_centos: []
+remove_packages_centos: []
+
+services_running:
+  - sshd
+
+root_shell: /bin/bash
+...

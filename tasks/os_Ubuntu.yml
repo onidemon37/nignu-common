@@ -1,0 +1,16 @@
+---
+- name: include vars for Ubuntu                        
+  include_vars: "os_{{ ansible_facts['distribution'] }}.yml"
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: install Ubuntu packages
+  apt:
+    name: "{{ packages_ubuntu }}"
+    state: present
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: remove no longer required Ubuntu packages
+  apt:
+    name: "{{ remove_packages_ubuntu }}"
+    state: absent
+  when: ansible_facts['distribution'] == 'Ubuntu'

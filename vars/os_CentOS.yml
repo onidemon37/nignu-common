@@ -1,0 +1,13 @@
+---
+# vars for centos distribution
+packages_centos:
+  - bind-utils
+  - less
+  - lsof
+  - rsync
+  - less
+  - wget
+  - vim
+  - nmap
+  - tcpdump
+  - curl
