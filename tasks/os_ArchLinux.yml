@@ -1,5 +1,5 @@
 ---
-- name: include vars "{{ ansible_facts['distribution'] }}"
+- name: include vars for Archlinux
   include_vars: "os_{{ ansible_facts['distribution'] }}.yml"
   when: ansible_facts['distribution'] == 'Archlinux'
 
