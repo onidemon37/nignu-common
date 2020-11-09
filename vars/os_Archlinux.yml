@@ -4,4 +4,5 @@ packages_arch:
   - nvim
   - openssh-server
   - nmap
+  - tmux
 ...

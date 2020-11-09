@@ -24,10 +24,9 @@ packages_ubuntu:
   - update-motd
   - nfs-common
   - zsh
-  - zsh-autosuggestions
-  - zsh-syntax-highlighting
   - python3
   - idle3
   - update-motd
+  - tmux
 
 remove_packages_ubuntu: []
