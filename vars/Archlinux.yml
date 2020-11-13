@@ -1,0 +1,17 @@
+---
+# vars for archlinux
+__packages_install:
+  - linux-firmware
+  - base-devel
+  - keychain
+  - sudo
+  - unzip
+  - rsync
+  - tar
+  - neovim
+  - zsh
+  - nmap
+  - tmux
+  - wget
+  - curl
+  - unrar

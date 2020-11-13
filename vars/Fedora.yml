@@ -1,0 +1,17 @@
+---
+# vars for centos distribution
+packages_install:
+  - zsh
+  - keychain
+  - unzip
+  - rsync
+  - tar
+  - neovim
+  - zsh
+  - nmap
+  - tmux
+  - wget
+  - curl
+  - lsof
+  - subversion
+  - htop

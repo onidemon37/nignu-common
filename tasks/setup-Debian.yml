@@ -29,4 +29,29 @@
   apt:
     name: "{{ remove_packages_debian }}"
     state: present
-  when: ansible_facts['distribution'] == 'Debian'
+  when: packages_remove == true
+
+- name: ensure systemd-timesyncd.conf file
+  lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    regexp: '^=?NTP'
+    line: 'NTP=0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org'
+    state: present
+  notify: restart systemd-timesyncd
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Ensure systemd-timesyncd.conf is running
+  systemd:
+    name: systemd-timesyncd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  notify: restart systemd-timesyncd
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes
+    name: ssh
+  when: ansible_facts['os_family'] == "Debian"

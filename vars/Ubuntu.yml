@@ -1,6 +1,6 @@
 ---
 # vars for Ubuntu distribution
-packages_ubuntu:
+__packages_install:
   - apt-transport-https
   - python3-apt
   - sysstat
@@ -29,4 +29,4 @@ packages_ubuntu:
   - update-motd
   - tmux
 
-remove_packages_ubuntu: []
+__packages_remove: []

@@ -8,10 +8,18 @@ Vagrant.configure("2") do |config|
   # define mannsory 
   config.vm.define "manns" do |manns|
     manns.vm.hostname = "manns1"
-    manns.vm.box = "debian/buster64"
+    manns.vm.box = "generic/ubuntu2004"
     manns.vm.network "private_network",type: "dhcp"
     manns.vm.provision "ansible" do |ansible|
-      ansible.playbook = "../../playbooks/common.yml"
+      ansible.playbook = "../../../playbooks/raspberry.yml"
+    end
+  end
+  config.vm.define "archtest" do |archtest|
+    archtest.vm.hostname = "archtest"
+    archtest.vm.box = "archlinux/archlinux"
+    archtest.vm.network "private_network",type: "dhcp"
+    archtest.vm.provision "ansible" do |ansible|
+      ansible.playbook = "../../../playbooks/raspberry.yml"
     end
   end
 end

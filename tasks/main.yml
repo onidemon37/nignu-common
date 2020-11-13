@@ -1,37 +1,90 @@
 ---
-- name: install Ubuntu packages
-  include: "os_{{ ansible_facts['distribution'] }}.yml"
-  when: ansible_facts['distribution'] == 'Ubuntu'
+- name: install Variables for Ubuntu
+  include_vars: "{{ ansible_distribution }}.yml"
 
-- name: install debian packages
-  include: "os_{{ ansible_facts['distribution'] }}.yml"
-  when: ansible_facts['distribution'] == 'Debian'
+- name: include when Ubuntu
+  include_tasks: setup-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
 
-- name: install centos packages
-  include: "os_{{ ansible_facts['distribution'] }}.yml"
-  when: ansible_facts['distribution'] == 'CentOS'
+- name: include when Debian
+  include_tasks: setup-Debian.yml
+  when: ansible_distribution == 'Debian'
 
-- name: install Archlinux packages
-  include: "os_{{ ansible_facts['distribution'] }}.yml"
-  when: ansible_facts['distribution'] == 'Archlinux'
+- name: include when Centos
+  include_tasks: 
+    file: setup-CentOS.yml
+  when: ansible_distribution == 'CentOS'
+
+- name: include when Archlinux
+  include_tasks: "setup-ArchLinux.yml"
+  when: ansible_distribution == 'Archlinux'
+
+- name: add user
+  user:
+    name: "{{ user_name }}"
+    createhome: yes
+    comment: "{{ user_comments }}"
+    shell: "{{ user_shell }}"
+    groups: "{{ user_groups }}"
+
+- name: create .ssh folder
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    owner: "{{ user_name }}"
+    state: directory
+
+- name: set ansible user id_rsa key
+  authorized_key:
+    user: "{{ user_name }}"
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    state: present
+ 
+- name: allow Ansible User to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    line: '"{{ user_name }}" ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Ensure zshrc file
+  template:
+    src: zshrc.j2
+    dest: /home/{{ user_name }}/.zshrc
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0750'
+
+- name: clone oh-my-zsh for users
+  tags: oh-my-zsh
+  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
+  args:
+    chdir: '~{{ user_name }}'
+    creates: '~{{ user_name }}/.oh-my-zsh'
+  when: oh_my_zsh_install == true
+
+- name: change folder ownership
+  file:
+    path: "/home/{{ user_name }}/.oh-my-zsh"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
 
 - name: disable motd
   systemd:
     name: motd
     state: stopped
-  when: ansible_facts['os_family'] == 'Debian'
+  when: ansible_os_family == 'Debian'
 
 - name: create update-motd.d folder
   file:
     path: /etc/update-motd.d
     state: directory
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_os_family == "Debian"
 
 - name: remove motd file
   file:
     path: /etc/motd
     state: absent
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_os_family == "Debian"
 
 - name: Ensure Ensure /etc/update-motd/20-logo exists
   copy:
@@ -40,18 +93,27 @@
     owner: root
     group: root
     mode: '0550'
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_os_family == "Debian"
+
+- name: Ensure Ensure /etc/update-motd/20-logo exists
+  copy:
+    src: files/etc/motd/20-logo
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: '0550'
+  when: ansible_distribution == 'Archlinux'
 
 - name: "set timezone"
   timezone:
     name: "{{ sys_timezone }}"
   when: sys_timezone is defined
 
-- name: ensure locale {{ sys_locale }} exists
-  community.general.locale_gen:
-    name: "{{ sys_locale }}"
-    state: present
-  when: sys_locale is defined
+  #- name: ensure locale {{ sys_locale }} exists
+  #  community.general.locale_gen:
+  #    name: "{{ sys_locale }}"
+  #    state: present
+  #  when: sys_locale is defined
 
 - name: ensure systemd-timesyncd.conf file
   lineinfile:
@@ -60,7 +122,7 @@
     line: 'NTP=0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org'
     state: present
   notify: restart systemd-timesyncd
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_os_family == "Debian"
 
 - name: Ensure systemd-timesyncd.conf is running
   systemd:
@@ -69,7 +131,7 @@
     enabled: yes
     daemon_reload: yes
   notify: restart systemd-timesyncd
-  when: ansible_facts['os_family'] == "Debian"
+  when: ansible_os_family == "Debian"
 
 - name: Ensure sshd_config file
   copy:
@@ -85,36 +147,7 @@
     enabled: yes
     daemon_reload: yes 
     name: ssh
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: add user
-  user:
-    name: "{{ ansible_user }}"
-    append: yes
-    state: present
-    createhome: yes
-    shell: "{{ ansible_user_shell }}"
-    groups: "{{ ansible_user_groups }}"
-
-- name: set ansible user id_rsa key
-  authorized_key:
-    user: "{{ ansible_user }}"
-    key: "{{ ansible_user_key_files }}"
-    state: present
-
-- name: allow Ansible User to have passwordless sudo
-  lineinfile:
-    dest: /etc/sudoers
-    line: '"{{ ansible_user }}" ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
-
-- name: Ensure zshrc file
-  copy:
-    src: files/home/zshrc
-    dest: /home/schoolboy/.zshrc
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: '0750'
+  when: ansible_os_family == "Debian"
 
 #- name: Ensure logrotate service file
 #  template:
@@ -131,4 +164,9 @@
 #    name: logrotate.service
 #    state: started
 #    enabled: yes
+
+    # TODO
+    # configure Lens
+    # sudo snap install kontena-lens --classic
 ...
+

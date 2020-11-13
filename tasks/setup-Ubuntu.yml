@@ -1,0 +1,32 @@
+---
+- name: include vars for Ubuntu                        
+  include_vars: "{{ ansible_facts['distribution'] }}.yml"
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: install Ubuntu packages
+  apt:
+    name: "{{ __packages_install }}"
+    state: present
+  when: ansible_facts['distribution'] == 'Ubuntu'
+
+- name: remove no longer required Ubuntu packages
+  apt:
+    name: "{{ packages_remove }}"
+    state: absent
+  when: packages_remove_debian == true
+
+#    
+#
+# TODO
+# https://github.com/pigmonkey/spark
+#
+# install and configure awesome WM
+# for more  docs check
+# https://wiki.archlinux.org/index.php/Awesome
+#
+#    $mkdir -p ~/.config/awesome
+#    $cp /etc/xdg/awesome/rc.lua ~/.config/awesome/
+#
+#    also need to install vicious 
+# clone git repo and change themes and configurations
+# https://github.com/copycat-killer/awesome-copycats

@@ -1,6 +1,6 @@
 ---
 # vars for Debian distribution
-packages_debian:
+__packages_install:
   - apt-transport-https
   - python3-apt
   - sysstat

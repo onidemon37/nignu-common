@@ -1,6 +1,6 @@
 ---
 # vars for centos distribution
-packages_centos:
+__packages_install:
   - bind-utils
   - less
   - lsof
