@@ -1,6 +1,6 @@
 ---
-- name: install Variables for Ubuntu
-  include_vars: "{{ ansible_distribution }}.yml"
+- name: install Variables for distributions
+  include_vars: "os_{{ ansible_distribution }}.yml"
 
 - name: include when Ubuntu
   include_tasks: setup-Ubuntu.yml
@@ -10,10 +10,10 @@
   include_tasks: setup-Debian.yml
   when: ansible_distribution == 'Debian'
 
-- name: include when Centos
+- name: include when Fedora
   include_tasks: 
-    file: setup-CentOS.yml
-  when: ansible_distribution == 'CentOS'
+    file: setup-Fedora.yml
+  when: ansible_distribution == 'Fedora'
 
 - name: include when Archlinux
   include_tasks: "setup-ArchLinux.yml"
@@ -45,64 +45,32 @@
     line: '"{{ user_name }}" ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
 
-- name: Ensure zshrc file
-  template:
-    src: zshrc.j2
-    dest: /home/{{ user_name }}/.zshrc
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-    mode: '0750'
+#- name: disable motd
+#  systemd:
+#    name: motd
+#    state: stopped
+#  when: ansible_os_family == 'Debian'
+#
+#- name: create update-motd.d folder
+#  file:
+#    path: /etc/update-motd.d
+#    state: directory
+#  when: ansible_os_family == "Debian"
+#
+#- name: remove motd file
+#  file:
+#    path: /etc/motd
+#    state: absent
+#  when: ansible_os_family == "Debian"
 
-- name: clone oh-my-zsh for users
-  tags: oh-my-zsh
-  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh'
-  args:
-    chdir: '~{{ user_name }}'
-    creates: '~{{ user_name }}/.oh-my-zsh'
-  when: oh_my_zsh_install == true
-
-- name: change folder ownership
-  file:
-    path: "/home/{{ user_name }}/.oh-my-zsh"
-    state: directory
-    owner: "{{ user_name }}"
-    group: "{{ user_name }}"
-
-- name: disable motd
-  systemd:
-    name: motd
-    state: stopped
-  when: ansible_os_family == 'Debian'
-
-- name: create update-motd.d folder
-  file:
-    path: /etc/update-motd.d
-    state: directory
-  when: ansible_os_family == "Debian"
-
-- name: remove motd file
-  file:
-    path: /etc/motd
-    state: absent
-  when: ansible_os_family == "Debian"
-
-- name: Ensure Ensure /etc/update-motd/20-logo exists
-  copy:
-    src: files/etc/motd/20-logo
-    dest: /etc/update-motd.d/20-logo
-    owner: root
-    group: root
-    mode: '0550'
-  when: ansible_os_family == "Debian"
-
-- name: Ensure Ensure /etc/update-motd/20-logo exists
-  copy:
-    src: files/etc/motd/20-logo
-    dest: /etc/motd
-    owner: root
-    group: root
-    mode: '0550'
-  when: ansible_distribution == 'Archlinux'
+#- name: Ensure Ensure /etc/update-motd/20-logo exists
+#  copy:
+#    src: files/etc/motd/20-logo
+#    dest: /etc/update-motd.d/20-logo
+#    owner: root
+#    group: root
+#    mode: '0550'
+#  when: ansible_os_family == "Debian"
 
 - name: "set timezone"
   timezone:
@@ -142,13 +110,6 @@
     mode: '0644'
   notify: restart_sshd
 
-- name: Ensure ssh service is started and enabled
-  systemd:
-    enabled: yes
-    daemon_reload: yes 
-    name: ssh
-  when: ansible_os_family == "Debian"
-
 #- name: Ensure logrotate service file
 #  template:
 #    src: templates/newitem.j2
@@ -169,4 +130,3 @@
     # configure Lens
     # sudo snap install kontena-lens --classic
 ...
-

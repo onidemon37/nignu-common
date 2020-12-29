@@ -10,6 +10,7 @@ user_groups: users
 user_comments: ""
 user_keys: "files/public_keys/id_rsa.pub"
 
+oh_my_zsh_install: true
 oh_my_zsh_theme: robbyrussell
 oh_my_zsh_plugins:
   - git
@@ -17,5 +18,11 @@ oh_my_zsh_plugins:
   - zsh-autosuggestions
   - zsh-completions
 
-oh_my_zsh_install: true
-...
+packages_remove_fedora: false
+packages_remove_debian: false
+packages_remove_ubuntu: false
+packages_remove_archlinux: false
+
+packages_remove: []
+window_manager_install: true
+window_manager_default: awesome

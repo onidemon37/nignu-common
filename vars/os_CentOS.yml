@@ -1,6 +1,6 @@
 ---
 # vars for centos distribution
-__packages_install:
+packages_install:
   - bind-utils
   - less
   - lsof
@@ -11,3 +11,5 @@ __packages_install:
   - nmap
   - tcpdump
   - curl
+
+packages_remove: []

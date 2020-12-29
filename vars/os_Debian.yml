@@ -1,6 +1,6 @@
 ---
-# vars for Ubuntu distribution
-__packages_install:
+# vars for Debian distribution
+packages_install:
   - apt-transport-https
   - python3-apt
   - sysstat
@@ -9,24 +9,21 @@ __packages_install:
   - less
   - ca-certificates
   - curl
-  - git
   - software-properties-common
   - wget
-  - openssl
   - resolvconf
   - dnsutils
+  - vim
+  - git
   - sudo
   - gnupg2
-  - neovim
   - nmap
   - tcpdump
   - python3-openssl
-  - update-motd
-  - nfs-common
   - zsh
+  - python3-virtualenv
   - python3
   - idle3
-  - update-motd
   - tmux
 
-__packages_remove: []
+packages_remove: []

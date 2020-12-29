@@ -1,6 +1,6 @@
 ---
 # vars for archlinux
-__packages_install:
+packages_install:
   - linux-firmware
   - base-devel
   - keychain
@@ -15,3 +15,5 @@ __packages_install:
   - wget
   - curl
   - unrar
+
+packages_remove: []

@@ -20,16 +20,16 @@
 
 - name: install debian packages
   apt:
-    name: "{{ packages_debian }}"
+    name: "{{ packages_install }}"
     state: present
     update_cache: true
   when: ansible_facts['distribution'] == 'Debian'
 
 - name: remove no longer needed debian packages
   apt:
-    name: "{{ remove_packages_debian }}"
+    name: "{{ packages_remove }}"
     state: present
-  when: packages_remove == true
+  when: packages_remove_debian == true
 
 - name: ensure systemd-timesyncd.conf file
   lineinfile:

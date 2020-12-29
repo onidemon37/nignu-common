@@ -5,7 +5,7 @@
 
 - name: install Ubuntu packages
   apt:
-    name: "{{ __packages_install }}"
+    name: "{{ packages_install }}"
     state: present
   when: ansible_facts['distribution'] == 'Ubuntu'
 
@@ -13,8 +13,14 @@
   apt:
     name: "{{ packages_remove }}"
     state: absent
-  when: packages_remove_debian == true
+  when: packages_remove_ubuntu == true
 
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes 
+    name: ssh
+  when: ansible_facts['os_family'] == "Debian"
 #    
 #
 # TODO

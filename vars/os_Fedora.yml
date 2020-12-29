@@ -1,5 +1,5 @@
 ---
-# vars for centos distribution
+# vars for fedora distribution
 packages_install:
   - zsh
   - keychain
@@ -15,3 +15,5 @@ packages_install:
   - lsof
   - subversion
   - htop
+
+packages_remove: []

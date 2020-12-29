@@ -1,0 +1,32 @@
+---
+- name: include vars for Debian
+  include_vars: "os_{{ ansible_facts['distribution'] }}.yml"
+  when: ansible_facts['distribution'] == 'Fedora'
+
+- name: Install fedora distribution specific base packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - "{{ packages_install }}"
+
+- name: remove no longer required CentOS packages
+  dnf:
+    name: "{{ packages_remove }}"
+    state: absent
+  when: packages_remove_fedora == True
+
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes 
+    name: sshd
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes 
+    name: sshd
+  when: ansible_facts['distribution'] == 'Fedora'
