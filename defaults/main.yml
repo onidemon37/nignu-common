@@ -4,9 +4,9 @@ country_name: "UK"
 default_locale: en_GB.UTF-8
 debian_repo: http://ftp.us.debian.org/debian
 
-user_name: schoolboy
+user_name: ""
 user_shell: /bin/zsh
-user_groups: users
+user_groups: []
 user_comments: ""
 user_keys: "files/public_keys/id_rsa.pub"
 

@@ -1,4 +1,5 @@
 ---
+# tasks file for nignu-common
 - name: install Variables for distributions
   include_vars: "os_{{ ansible_distribution }}.yml"
 
@@ -17,7 +18,7 @@
 
 - name: include when Archlinux
   include_tasks: "setup-ArchLinux.yml"
-  when: ansible_distribution == 'Archlinux'
+  when: ansible_os_family == 'Archlinux'
 
 - name: add user
   user:

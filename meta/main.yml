@@ -11,6 +11,7 @@ galaxy_info:
   platforms:
     - name: Fedora
       versions:
+      - 32
       - 33
 
     - name: Debian
@@ -22,14 +23,19 @@ galaxy_info:
       versions:
       - 18.04
       - 18.10
-      - 10.04
-      - 10.10
+      - 20.04
+      - 20.10
 
     - name: Archlinux
       versions:
       - All
 
-  galaxy_tags: []
+    - name: Manjaro
+      versions:
+      - All
+
+  galaxy_tags:
+    - common
 
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.

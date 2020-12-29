@@ -3,6 +3,12 @@
   include_vars: "os_{{ ansible_facts['distribution'] }}.yml"
   when: ansible_facts['distribution'] == 'Fedora'
 
+- name: Install pre-requisite packages for Fedora
+  yum:
+    name: dnf-plugins-core
+    state: present
+    update_cache: yes
+
 - name: Install fedora distribution specific base packages
   dnf:
     name: "{{ item }}"
