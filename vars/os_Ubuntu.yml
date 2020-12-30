@@ -1,0 +1,32 @@
+---
+# vars for Ubuntu distribution
+packages_install:
+  - apt-transport-https
+  - python3-apt
+  - sysstat
+  - rsync
+  - lsof
+  - less
+  - ca-certificates
+  - curl
+  - git
+  - software-properties-common
+  - wget
+  - openssl
+  - resolvconf
+  - dnsutils
+  - sudo
+  - gnupg2
+  - neovim
+  - nmap
+  - tcpdump
+  - python3-openssl
+  - update-motd
+  - nfs-common
+  - zsh
+  - python3
+  - idle3
+  - update-motd
+  - tmux
+
+packages_remove: []

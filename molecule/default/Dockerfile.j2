@@ -1,0 +1,10 @@
+FROM debian:buster
+LABEL maintainer="Edino Moniz"
+LABEL version="0.1"
+LABEL description="Docker image for molecule testing"
+
+# Disable prompt Buring packages installation
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Update Debian Software repository
+RUN apt update

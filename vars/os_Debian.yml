@@ -1,0 +1,29 @@
+---
+# vars for Debian distribution
+packages_install:
+  - apt-transport-https
+  - python3-apt
+  - sysstat
+  - rsync
+  - lsof
+  - less
+  - ca-certificates
+  - curl
+  - software-properties-common
+  - wget
+  - resolvconf
+  - dnsutils
+  - vim
+  - git
+  - sudo
+  - gnupg2
+  - nmap
+  - tcpdump
+  - python3-openssl
+  - zsh
+  - python3-virtualenv
+  - python3
+  - idle3
+  - tmux
+
+packages_remove: []

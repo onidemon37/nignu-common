@@ -1,0 +1,16 @@
+---
+# handlers file for common
+- name: restart_sshd
+  systemd:
+    name: sshd
+    state: restarted
+
+- name: reload systemd
+  systemd:
+    daemon_reload: true
+
+- name: restart systemd-timesyncd
+  systemd:
+    name: systemd-timesyncd
+    state: restarted
+...

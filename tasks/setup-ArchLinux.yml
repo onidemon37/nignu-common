@@ -1,0 +1,19 @@
+---
+- name: install archlinux packages
+  pacman:
+    name: "{{ packages_install }}"
+    state: present
+    update_cache: yes
+
+- name: remove no longer required Archlinux packages
+  pacman:
+    name: "{{ packages_remove }}"
+    state: absent
+  when: packages_remove_archlinux == true
+
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes 
+    name: sshd
+  when: ansible_facts['os_family'] == "Archlinux"

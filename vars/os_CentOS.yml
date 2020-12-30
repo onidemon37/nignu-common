@@ -1,0 +1,15 @@
+---
+# vars for centos distribution
+packages_install:
+  - bind-utils
+  - less
+  - lsof
+  - rsync
+  - less
+  - wget
+  - vim
+  - nmap
+  - tcpdump
+  - curl
+
+packages_remove: []

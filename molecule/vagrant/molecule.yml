@@ -1,0 +1,65 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: libvirt
+
+platforms:
+        #  - name: debian10
+        #    box: debian/buster64
+        #    memory: 512
+        #    cpus: 1
+        #    instance_raw_config_args:
+        #      - 'vagrant.plugins = ["vagrant-libvirt"]'
+        #
+        #  - name: centos8
+        #    box: generic/centos8
+        #    memory: 512
+        #    cpus: 1
+        #    instance_raw_config_args:
+        #      - 'vagrant.plugins = ["vagrant-libvirt"]'
+
+        #  - name: Fedora32
+        #    box: generic/cfedora32
+        #    memory: 512
+        #    cpus: 1
+        #    instance_raw_config_args:
+        #      - 'vagrant.plugins = ["vagrant-libvirt"]'
+
+  - name: Archlinux
+    box: archlinux/archlinux
+    memory: 512
+    cpus: 1
+    instance_raw_config_args:
+      - 'vagrant.plugins = ["vagrant-libvirt"]'
+
+  - name: Ubuntu20
+    box: generic/ubuntu2004
+    memory: 512
+    cpus: 1
+    instance_raw_config_args:
+      - 'vagrant.plugins = ["vagrant-libvirt"]'
+    
+        # - name: instancename
+        #   instance_raw_config_args:
+        #     - 'vagrant.plugins = ["vagrant-libvirt"]'
+        #    config_options:
+        #      ssh.keep_alive: yes
+        #      ssh.remote_user: "'vagrant'"
+        #    privileged: true
+        #    box: debian/buster64
+        #    provision: no
+providers:
+  - name: libvirt
+    type: libvirt
+    options:
+      memory: 512
+      cpus: 1
+    driver: kvm
+
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

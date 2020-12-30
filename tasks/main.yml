@@ -1,0 +1,133 @@
+---
+# tasks file for nignu-common
+- name: install Variables for distributions
+  include_vars: "os_{{ ansible_distribution }}.yml"
+
+- name: include when Ubuntu
+  include_tasks: setup-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: include when Debian
+  include_tasks: setup-Debian.yml
+  when: ansible_distribution == 'Debian'
+
+- name: include when Fedora
+  include_tasks: 
+    file: setup-Fedora.yml
+  when: ansible_distribution == 'Fedora'
+
+- name: include when Archlinux
+  include_tasks: "setup-ArchLinux.yml"
+  when: ansible_os_family == 'Archlinux'
+
+- name: add user
+  user:
+    name: "{{ user_name }}"
+    createhome: yes
+    comment: "{{ user_comments }}"
+    shell: "{{ user_shell }}"
+    groups: "{{ user_groups }}"
+
+- name: create .ssh folder
+  file:
+    path: "/home/{{ user_name }}/.ssh"
+    owner: "{{ user_name }}"
+    state: directory
+
+- name: set ansible user id_rsa key
+  authorized_key:
+    user: "{{ user_name }}"
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    state: present
+ 
+- name: allow Ansible User to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    line: '"{{ user_name }}" ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+#- name: disable motd
+#  systemd:
+#    name: motd
+#    state: stopped
+#  when: ansible_os_family == 'Debian'
+#
+#- name: create update-motd.d folder
+#  file:
+#    path: /etc/update-motd.d
+#    state: directory
+#  when: ansible_os_family == "Debian"
+#
+#- name: remove motd file
+#  file:
+#    path: /etc/motd
+#    state: absent
+#  when: ansible_os_family == "Debian"
+
+#- name: Ensure Ensure /etc/update-motd/20-logo exists
+#  copy:
+#    src: files/etc/motd/20-logo
+#    dest: /etc/update-motd.d/20-logo
+#    owner: root
+#    group: root
+#    mode: '0550'
+#  when: ansible_os_family == "Debian"
+
+- name: "set timezone"
+  timezone:
+    name: "{{ sys_timezone }}"
+  when: sys_timezone is defined
+
+  #- name: ensure locale {{ sys_locale }} exists
+  #  community.general.locale_gen:
+  #    name: "{{ sys_locale }}"
+  #    state: present
+  #  when: sys_locale is defined
+
+- name: ensure systemd-timesyncd.conf file
+  lineinfile:
+    path: /etc/systemd/timesyncd.conf
+    regexp: '^=?NTP'
+    line: 'NTP=0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org'
+    state: present
+  notify: restart systemd-timesyncd
+  when: ansible_os_family == "Debian"
+
+- name: Ensure systemd-timesyncd.conf is running
+  systemd:
+    name: systemd-timesyncd
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  notify: restart systemd-timesyncd
+  when: ansible_os_family == "Debian"
+
+- name: Ensure sshd_config file
+  copy:
+    src: files/etc/ssh/sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart_sshd
+
+#- name: Ensure logrotate service file
+#  template:
+#    src: templates/newitem.j2
+#    dest: "/home/schoolboy/{{ item.name }}.txt"
+#    #    owner: root
+#    #    group: "{{ root_group }}"
+#    #    mode: '0644'
+#  with_items:
+#    - "{{ services }}"
+
+#- name: ensure logrotate is started
+#  systemd:
+#    name: logrotate.service
+#    state: started
+#    enabled: yes
+
+    # TODO
+    # configure Lens
+    # sudo snap install kontena-lens --classic
+...

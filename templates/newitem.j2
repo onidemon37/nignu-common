@@ -1,0 +1,23 @@
+{% for item in services %}
+/var/log/{{ item.name }}/{{ item.name }}.txt
+{% if item.time.daily == true %}
+	daily
+{% elif item.time.weekly == true %}
+	weekly
+{% else %}
+	montly
+{% endif %}
+	rotate {{ item.rotate |default (1) }}
+{% if item.compress == true %}
+	compress
+{% endif %}
+{% if item.delaycompress == true %}
+	delaycompress
+{% endif %}
+	missingok
+	create 644 root root
+{% if item.size is defined %}
+	size {{ item.size }}
+{% endif %}
+}
+{% endfor %}

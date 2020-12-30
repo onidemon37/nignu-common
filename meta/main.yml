@@ -1,0 +1,43 @@
+galaxy_info:
+  author: Edino 'schoolboy' Moniz
+  description: SRE
+  company: your company (optional)
+
+  license:
+    - GPL-2.0-or-later
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: Fedora
+      versions:
+      - 32
+      - 33
+
+    - name: Debian
+      versions:
+      - 9
+      - 10
+
+    - name: Ubuntu
+      versions:
+      - 18.04
+      - 18.10
+      - 20.04
+      - 20.10
+
+    - name: Archlinux
+      versions:
+      - All
+
+    - name: Manjaro
+      versions:
+      - All
+
+  galaxy_tags:
+    - common
+
+    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
+    #       Maximum 20 tags per role.
+
+dependencies: []
