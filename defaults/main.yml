@@ -8,15 +8,6 @@ user_name: ""
 user_shell: /bin/zsh
 user_groups: []
 user_comments: ""
-user_keys: "files/public_keys/id_rsa.pub"
-
-oh_my_zsh_install: true
-oh_my_zsh_theme: robbyrussell
-oh_my_zsh_plugins:
-  - git
-  - zsh-syntax-highlighting
-  - zsh-autosuggestions
-  - zsh-completions
 
 packages_remove_fedora: false
 packages_remove_debian: false
