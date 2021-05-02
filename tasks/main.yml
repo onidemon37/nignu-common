@@ -3,6 +3,9 @@
 - name: install Variables for distributions
   include_vars: "os_{{ ansible_distribution }}.yml"
 
+- name: install Variables for distributions
+  include_vars: "os_{{ ansible_os_family }}.yml"
+
 - name: include when Ubuntu
   include_tasks: setup-Ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
@@ -15,6 +18,10 @@
   include_tasks: 
     file: setup-Fedora.yml
   when: ansible_distribution == 'Fedora'
+
+- name: include when RedHat
+  include_tasks: "setup-RedHat.yml"
+  when: ansible_os_family == 'RedHat'
 
 - name: include when Archlinux
   include_tasks: "setup-ArchLinux.yml"

@@ -1,0 +1,17 @@
+---
+# vars for RedHat Family distribution
+packages_install:
+  - zsh
+  - unzip
+  - rsync
+  - star
+  - vim-enhanced
+  - nmap
+  - tmux
+  - wget
+  - curl
+  - lsof
+  - git
+  - firewalld
+
+packages_remove: []

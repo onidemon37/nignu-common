@@ -1,0 +1,38 @@
+---
+- name: include vars for RedHat
+  include_vars: "os_{{ ansible_facts['os_family'] }}.yml"
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Install pre-requisite packages for RedHat
+  yum:
+    name: dnf-plugins-core
+    state: present
+    update_cache: yes
+
+- name: Install RedHat distribution specific base packages
+  dnf:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - "{{ packages_install }}"
+
+- name: remove no longer required RedHat packages
+  dnf:
+    name: "{{ packages_remove }}"
+    state: absent
+  when: packages_remove_redhat == True
+
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes 
+    name: sshd
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Ensure ssh service is started and enabled
+  systemd:
+    enabled: yes
+    daemon_reload: yes 
+    name: sshd
+  when: ansible_facts['os_family'] == "RedHat"

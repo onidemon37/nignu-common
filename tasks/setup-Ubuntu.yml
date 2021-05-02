@@ -1,6 +1,6 @@
 ---
 - name: include vars for Ubuntu                        
-  include_vars: "{{ ansible_facts['distribution'] }}.yml"
+  include_vars: "os_{{ ansible_facts['distribution'] }}.yml"
   when: ansible_facts['distribution'] == 'Ubuntu'
 
 - name: install Ubuntu packages
