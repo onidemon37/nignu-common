@@ -15,5 +15,22 @@ packages_install:
   - wget
   - curl
   - unrar
+  - ipcalc
+  - ntp
+  - nfs-utils
+  - tcpdump
+  - sysstat
+  - procps-ng
+  - gnupg
+  - lsof
+  - openssh
+  - neovim
+  - git
+  - mlocate
+  - bat
+  - python-pip
+  - findutils
+  - hashcat
+  - btop
 
 packages_remove: []

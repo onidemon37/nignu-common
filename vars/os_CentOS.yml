@@ -1,15 +1,26 @@
 ---
-# vars for centos distribution
+# vars for fedora distribution
 packages_install:
-  - bind-utils
-  - less
-  - lsof
+  - keychain
+  - zsh
   - rsync
-  - less
-  - wget
-  - vim
+  - unzip
+  - tar
+  - neovim
+  - zsh
   - nmap
-  - tcpdump
+  - tmux
+  - wget
   - curl
+  - ipcalc
+  - ntpstat
+  - nfs-utils
+  - bind-utils
+  - tcpdump
+  - procps-ng
+  - git
+  - python3-pip
+  - lsof
+  - gnupg
 
 packages_remove: []
