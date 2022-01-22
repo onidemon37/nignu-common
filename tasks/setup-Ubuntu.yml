@@ -21,18 +21,3 @@
     daemon_reload: yes 
     name: ssh
   when: ansible_facts['os_family'] == "Debian"
-#    
-#
-# TODO
-# https://github.com/pigmonkey/spark
-#
-# install and configure awesome WM
-# for more  docs check
-# https://wiki.archlinux.org/index.php/Awesome
-#
-#    $mkdir -p ~/.config/awesome
-#    $cp /etc/xdg/awesome/rc.lua ~/.config/awesome/
-#
-#    also need to install vicious 
-# clone git repo and change themes and configurations
-# https://github.com/copycat-killer/awesome-copycats

@@ -5,8 +5,8 @@ default_locale: en_GB.UTF-8
 debian_repo: http://ftp.us.debian.org/debian
 
 user_name: ""
-user_shell: /bin/zsh
-user_groups: []
+user_shell: ""
+user_groups: [""]
 user_comments: ""
 
 packages_remove_fedora: false
@@ -15,5 +15,3 @@ packages_remove_ubuntu: false
 packages_remove_archlinux: false
 
 packages_remove: []
-window_manager_install: true
-window_manager_default: awesome

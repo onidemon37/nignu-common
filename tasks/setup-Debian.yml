@@ -3,21 +3,6 @@
   include_vars: "os_{{ ansible_facts['distribution'] }}.yml"
   when: ansible_facts['distribution'] == 'Debian'
   
-- name: Ensure Debian distibution release repo
-  apt_repository:
-    filename: "debian_{{ ansible_facts['distribution_release'] }}"
-    repo: "deb {{ debian_repo }} {{ ansible_facts['distribution_release'] }} main contrib non-free"
-
-- name: Ensure debian_security distribution release repo
-  apt_repository:
-    filename: debian_security
-    repo: "deb http://security.debian.org/ {{ ansible_facts['distribution_release'] }}/updates main contrib non-free"
-
-- name: Ensure distribution release updates repo
-  apt_repository:
-    filename: "{{ ansible_facts['distribution_release'] }}-updates"
-    repo: "deb {{ debian_repo }} {{ ansible_facts['distribution_release'] }}-updates main contrib"
-
 - name: install debian packages
   apt:
     name: "{{ packages_install }}"
@@ -30,24 +15,6 @@
     name: "{{ packages_remove }}"
     state: present
   when: packages_remove_debian == true
-
-- name: ensure systemd-timesyncd.conf file
-  lineinfile:
-    path: /etc/systemd/timesyncd.conf
-    regexp: '^=?NTP'
-    line: 'NTP=0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org'
-    state: present
-  notify: restart systemd-timesyncd
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: Ensure systemd-timesyncd.conf is running
-  systemd:
-    name: systemd-timesyncd
-    state: started
-    enabled: yes
-    daemon_reload: yes
-  notify: restart systemd-timesyncd
-  when: ansible_facts['os_family'] == "Debian"
 
 - name: Ensure ssh service is started and enabled
   systemd:

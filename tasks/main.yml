@@ -84,24 +84,6 @@
   #    state: present
   #  when: sys_locale is defined
 
-- name: ensure systemd-timesyncd.conf file
-  lineinfile:
-    path: /etc/systemd/timesyncd.conf
-    regexp: '^=?NTP'
-    line: 'NTP=0.uk.pool.ntp.org 1.uk.pool.ntp.org 2.uk.pool.ntp.org 3.uk.pool.ntp.org'
-    state: present
-  notify: restart systemd-timesyncd
-  when: ansible_os_family == "Debian"
-
-- name: Ensure systemd-timesyncd.conf is running
-  systemd:
-    name: systemd-timesyncd
-    state: started
-    enabled: yes
-    daemon_reload: yes
-  notify: restart systemd-timesyncd
-  when: ansible_os_family == "Debian"
-
 - name: Ensure sshd_config file
   copy:
     src: files/etc/ssh/sshd_config
@@ -127,7 +109,4 @@
 #    state: started
 #    enabled: yes
 
-    # TODO
-    # configure Lens
-    # sudo snap install kontena-lens --classic
 ...

@@ -2,28 +2,35 @@
 # vars for Debian distribution
 packages_install:
   - apt-transport-https
-  - python3-apt
-  - sysstat
-  - rsync
-  - lsof
-  - less
   - ca-certificates
-  - curl
   - software-properties-common
-  - wget
-  - resolvconf
-  - dnsutils
-  - vim
-  - git
+  - keychain
   - sudo
-  - gnupg2
-  - nmap
-  - tcpdump
-  - python3-openssl
+  - unzip
+  - tar
+  - rsync
+  - neovim
   - zsh
+  - nmap
+  - tmux
+  - wget
+  - curl
+  - unrar
+  - ipcalc
+  - ntp
+  - nfs-common
+  - tcpdump
+  - sysstat
+  - gnupg2
+  - lsof
+  - dnsutils
+  - git
+  - bat
+  - findutils
+  - mlocate
+  - python3-openssl
+  - python3-apt
   - python3-virtualenv
   - python3
-  - idle3
-  - tmux
 
 packages_remove: []
