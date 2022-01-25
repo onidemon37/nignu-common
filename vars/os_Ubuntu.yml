@@ -28,5 +28,6 @@ packages_install:
   - idle3
   - update-motd
   - tmux
+  - traceroute
 
 packages_remove: []

@@ -23,16 +23,16 @@
 #RekeyLimit default none
 
 # Logging
-#SyslogFacility AUTH
-#LogLevel INFO
+SyslogFacility AUTH
+LogLevel INFO
 
 # Authentication:
 
 #LoginGraceTime 2m
-PermitRootLogin yes
+PermitRootLogin prohibit-password
 #StrictModes yes
-MaxAuthTries 3
-MaxSessions 2
+MaxAuthTries 2
+MaxSessions 3
 
 PubkeyAuthentication yes
 
@@ -81,7 +81,7 @@ ChallengeResponseAuthentication no
 # and ChallengeResponseAuthentication to 'no'.
 UsePAM yes
 
-#AllowAgentForwarding yes
+AllowAgentForwarding yes
 #AllowTcpForwarding yes
 #GatewayPorts no
 #X11Forwarding no

@@ -31,5 +31,6 @@ packages_install:
   - findutils
   - hashcat
   - btop
+  - traceroute
 
 packages_remove: []
