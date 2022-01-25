@@ -31,5 +31,6 @@ packages_install:
   - python3-apt
   - python3-virtualenv
   - python3
+  - traceroute
 
 packages_remove: []

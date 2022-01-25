@@ -22,5 +22,6 @@ packages_install:
   - python3-pip
   - lsof
   - gnupg
+  - traceroute
 
 packages_remove: []
