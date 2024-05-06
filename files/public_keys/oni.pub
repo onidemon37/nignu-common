@@ -1,1 +1,4 @@
+# hyperion
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINE8c1Kitk45gIWsysgaF/jTyUgM/V76zXdMInM8O+xU oni@hyperion
+# orion
+sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILUHbhGIoRS2Lx3DqTzNG2C1tyP4LMwyaV0+oGSIp5aCAAAABHNzaDo= oni@orion
